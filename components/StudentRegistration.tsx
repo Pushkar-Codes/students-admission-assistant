@@ -120,6 +120,11 @@ export default function StudentRegistrationForm() {
             Enroll today and get access to career-guided counselling and top
             course recommendations.
           </p>
+          <div className="mt-8 bg-yellow-400 w-[400px] p-6 rounded-lg shadow">
+            <p className="text-center text-red-500 text-xl font-semibold">
+              ADMISSION OPEN FOR 2025–26
+            </p>
+          </div>
         </div>
 
         {/* Right Form Area */}
