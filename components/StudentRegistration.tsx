@@ -120,7 +120,7 @@ export default function StudentRegistrationForm() {
             Enroll today and get access to career-guided counselling and top
             course recommendations.
           </p>
-          <div className="mt-8 shadow-md bg-yellow-400 w-[400px] p-6 rounded-lg shadow">
+          <div className="mt-8 shadow-md bg-yellow-400 w-[400px] p-6 rounded-lg">
             <p className="text-center text-red-500 text-xl font-semibold">
               ADMISSION OPEN FOR 2025–26
             </p>
@@ -264,6 +264,13 @@ export default function StudentRegistrationForm() {
           </form>
         </div>
       </div>
+      {/* Footer */}
+      <footer className="w-full border-t-1 text-center py-4 bg-gray-100 text-gray-500 text-sm mt-8">
+        <div className="flex items-center justify-center space-x-2">
+          <i className="ri-copyright-line"></i>
+          <p>All Rights Reserved 2025</p>
+        </div>
+      </footer>
     </div>
   );
 }

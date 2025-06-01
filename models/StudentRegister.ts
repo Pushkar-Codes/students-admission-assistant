@@ -10,6 +10,7 @@ const StudentRegisterSchema = new Schema({
   },
   schoolname: { type: String, required: true },
   currentclass: { type: String, required: true },
+
   phone: { type: String, required: true },
   havewhatsapp: { type: String, required: true },
   parentphone: { type: String, required: true },
