@@ -7,10 +7,10 @@ export default function AdminDashboard({ session }: { session: any }) {
 
   const sections = [
     {
-      title: "Manage Schools/Colleges",
+      title: "View Register Students",
       icon: "ri-building-line",
       id: "schools",
-      description: "Add, edit or remove institution data",
+      description: "Add, edit or remove student data",
     },
     {
       title: "Staff Management",
@@ -55,7 +55,7 @@ export default function AdminDashboard({ session }: { session: any }) {
       </nav>
 
       <div className="p-10">
-        <h1 className="text-2xl font-semibold mb-1">
+        <h1 className="text-2xl font-semibold mb-1 text-red-500">
           Welcome {session.user?.role}!
         </h1>
         <p className="text-gray-600 mb-6">Role: {session.user?.role}</p>
