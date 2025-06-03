@@ -1,89 +1,92 @@
 package com.Rupankar.BackendJavaERP.Student;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "studentregisters")
 public class StudentModel {
-    public String fullName;
+    public String name;
     public String email;
     public String gender;
-    public String schoolName;
-    public String currentClass;
-    public String studentPhoneNumber;
-    public Boolean studentHasWhatsapp;
-    public String parentPhoneNumber;
-    public Boolean parentHasWhatsapp;
+    public String schoolname;
+    public String currentclass;
+    public String phone;
+    public Boolean havewhatsapp;
+    public String parentphone;
+    public Boolean parentwhatsapp;
 
     // Getter start from here
 
-    public String getCurrentClass() {
-        return currentClass;
+    public String getCurrentclass() {
+        return currentclass;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
     public String getGender() {
         return gender;
     }
 
-    public Boolean getStudentHasWhatsapp() {
-        return studentHasWhatsapp;
+    public Boolean getHavewhatsapp() {
+        return havewhatsapp;
     }
 
-    public Boolean getParentHasWhatsapp() {
-        return parentHasWhatsapp;
+    public Boolean getParentwhatsapp() {
+        return parentwhatsapp;
     }
 
-    public String getParentPhoneNumber() {
-        return parentPhoneNumber;
+    public String getParentphone() {
+        return parentphone;
     }
 
-    public String getSchoolName() {
-        return schoolName;
+    public String getSchoolname() {
+        return schoolname;
     }
 
-    public String getStudentPhoneNumber() {
-        return studentPhoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
     // Setter start from here
 
-    public void setCurrentClass(String currentClass) {
-        this.currentClass = currentClass;
+    public void setCurrentclass(String currentclass) {
+        this.currentclass = currentclass;
     }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public void setStudentHasWhatsapp(Boolean studentHasWhatsapp) {
-        this.studentHasWhatsapp = studentHasWhatsapp;
+    public void setHavewhatsapp(Boolean havewhatsapp) {
+        this.havewhatsapp = havewhatsapp;
     }
 
-    public void setParentHasWhatsapp(Boolean parentHasWhatsapp) {
-        this.parentHasWhatsapp = parentHasWhatsapp;
+    public void setParentwhatsapp(Boolean parentwhatsapp) {
+        this.parentwhatsapp = parentwhatsapp;
     }
 
-    public void setParentPhoneNumber(String parentPhoneNumber) {
-        this.parentPhoneNumber = parentPhoneNumber;
+    public void setParentphone(String parentphone) {
+        this.parentphone = parentphone;
     }
 
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
+    public void setSchoolname(String schoolname) {
+        this.schoolname = schoolname;
     }
 
-    public void setStudentPhoneNumber(String studentPhoneNumber) {
-        this.studentPhoneNumber = studentPhoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
