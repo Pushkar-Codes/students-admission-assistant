@@ -1,4 +1,5 @@
 import "./globals.css";
+import PageWrapper from "@/components/PageWrapper";
 
 export const metadata = {
   title: "Student Admission Assistant",
@@ -11,7 +12,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <PageWrapper>{children}</PageWrapper>
+      </body>
     </html>
   );
 }

@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function AdminDashboard({ session }: { session: any }) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   const sections = [
     {
-      title: "View Register Students",
-      icon: "ri-building-line",
-      id: "schools",
-      description: "Add, edit or remove student data",
+      title: "View Registered Students",
+      icon: "ri-user-3-line",
+      id: "students",
+      description: "View or manage student data",
     },
     {
       title: "Staff Management",
@@ -22,13 +25,13 @@ export default function AdminDashboard({ session }: { session: any }) {
       title: "Rights Allocation",
       icon: "ri-lock-line",
       id: "rights",
-      description: "Grant or restrict module access to staff",
+      description: "Control access to system modules",
     },
     {
       title: "Call Log Management",
       icon: "ri-phone-line",
       id: "calls",
-      description: "Assign call logs to staff and monitor",
+      description: "Assign and monitor call logs",
     },
     {
       title: "Upload Templates",
@@ -45,55 +48,90 @@ export default function AdminDashboard({ session }: { session: any }) {
   ];
 
   return (
-    <div>
-      <nav className="h-24 px-4 flex items-center justify-center bg-white shadow border-b border-gray-200">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
+      <nav className="h-20 px-6 flex items-center justify-between bg-white border-b shadow-sm">
         <img
           src="/logo/logo-full.svg"
           alt="SRM Connect Logo"
-          className="h-60"
+          className="h-12"
         />
+        <p className="text-sm text-gray-600">
+          Logged in as{" "}
+          <span className="text-red-600">{session.user?.email}</span>
+        </p>
       </nav>
 
-      <div className="p-10">
-        <h1 className="text-2xl font-semibold mb-1 text-red-500">
-          Welcome {session.user?.role}!
-        </h1>
-        <p className="text-gray-600 mb-6">Role: {session.user?.role}</p>
-
-        {!activeSection && (
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {sections.map((section) => (
-              <div
-                key={section.id}
-                onClick={() => setActiveSection(section.id)}
-                className="bg-slate-900 p-6 rounded-xl shadow hover:bg-gray-800 cursor-pointer"
-              >
-                <h2 className="text-lg text-white font-semibold mb-1 flex items-center gap-2">
-                  <i className={`${section.icon} text-xl`} />
-                  {section.title}
-                </h2>
-                <p className="text-sm text-gray-300">{section.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-
-        {activeSection && (
-          <div className="mt-8 bg-gray-100 p-6 rounded-xl shadow-inner">
-            <div className="flex justify-between items-start mb-4">
-              <h2 className="text-2xl font-semibold text-slate-800">
-                {sections.find((s) => s.id === activeSection)?.title}
-              </h2>
-              <button
-                onClick={() => setActiveSection(null)}
-                className="text-gray-500 hover:text-red-500 text-sm"
-              >
-                Close ✕
-              </button>
+      <div className="flex flex-grow">
+        <aside className="w-64 bg-white border-r p-6 hidden lg:block">
+          <ScrollArea className="h-full">
+            <h2 className="text-lg font-semibold mb-4">Admin Menu</h2>
+            <div className="space-y-2">
+              {sections.map((section) => (
+                <Button
+                  key={section.id}
+                  variant={activeSection === section.id ? "default" : "ghost"}
+                  className="w-full justify-start text-left"
+                  onClick={() => setActiveSection(section.id)}
+                >
+                  <i className={`${section.icon} mr-2`} /> {section.title}
+                </Button>
+              ))}
             </div>
-            <p className="text-gray-700">This section is under construction.</p>
-          </div>
-        )}
+          </ScrollArea>
+        </aside>
+
+        <main className="flex-1 p-6">
+          <h1 className="text-2xl font-bold text-gray-800 mb-6">
+            {activeSection
+              ? sections.find((s) => s.id === activeSection)?.title
+              : `Welcome, ${session.user?.role}`}
+          </h1>
+
+          {activeSection ? (
+            <Card>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-xl">
+                    {sections.find((s) => s.id === activeSection)?.title}
+                  </CardTitle>
+                  <p className="text-sm text-gray-500">
+                    {sections.find((s) => s.id === activeSection)?.description}
+                  </p>
+                </div>
+                <Button variant="ghost" onClick={() => setActiveSection(null)}>
+                  ✕
+                </Button>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-700">
+                  This section is under construction.
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {sections.map((section) => (
+                <Card
+                  key={section.id}
+                  className="cursor-pointer hover:shadow-md transition"
+                  onClick={() => setActiveSection(section.id)}
+                >
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2 text-base">
+                      <i className={`${section.icon} text-lg`} />
+                      {section.title}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-sm text-gray-600">
+                      {section.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </main>
       </div>
     </div>
   );
