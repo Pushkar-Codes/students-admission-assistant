@@ -4,6 +4,18 @@ import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,45 +34,52 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100">
-      <div>
-        <img
-          src="/logo/logo-full.svg"
-          alt="SRM Logo"
-          className="w-64 h-64 object-contain mx-auto"
-        />
-      </div>
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md"
-      >
-        <h2 className="text-2xl font-semibold mb-4">Login</h2>
-        <div className="mb-4">
-          <label className="block mb-1">Email</label>
-          <input
-            type="email"
-            className="w-full border px-4 py-2 rounded"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block mb-1">Password</label>
-          <input
-            type="password"
-            className="w-full border px-4 py-2 rounded"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded w-full"
-        >
-          <i className="ri-login-circle-line mr-2"></i>Login
-        </button>
-      </form>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-100 px-4">
+      {/* <img src="/logo/logo-full.svg" alt="SRM Logo" className="w-52" /> */}
+
+      <Card className="w-full max-w-sm">
+        <CardHeader>
+          <CardTitle>Login to your account</CardTitle>
+          <CardDescription>
+            Enter your email and password to continue
+          </CardDescription>
+        </CardHeader>
+
+        <form onSubmit={handleSubmit}>
+          <CardContent className="space-y-4">
+            <div className="grid gap-2">
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="admin@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="grid gap-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+          </CardContent>
+
+          <CardFooter className="flex flex-col gap-2 mt-4">
+            <Button type="submit" className="w-full">
+              <i className="ri-login-circle-line mr-2"></i> Login
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
     </div>
   );
 }

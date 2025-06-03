@@ -1,6 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import SuccessPopup from "@/components/SuccessPopup"; // Ensure correct import path
 
 export default function StudentRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -21,7 +26,7 @@ export default function StudentRegistrationForm() {
     parentphone: "",
   });
 
-  const [message, setMessage] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   const validateField = (name: string, value: string) => {
     const phonePattern = /^\d{10}$/;
@@ -32,9 +37,7 @@ export default function StudentRegistrationForm() {
         return emailPattern.test(value) ? "" : "Invalid email format.";
       case "phone":
       case "parentphone":
-        return phonePattern.test(value)
-          ? ""
-          : "Phone number must be 10 digits.";
+        return phonePattern.test(value) ? "" : "Phone must be 10 digits.";
       default:
         return "";
     }
@@ -54,17 +57,15 @@ export default function StudentRegistrationForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setMessage("");
 
     const newErrors = {
       email: validateField("email", formData.email),
       phone: validateField("phone", formData.phone),
       parentphone: validateField("parentphone", formData.parentphone),
     };
-
     setErrors(newErrors);
 
-    if (Object.values(newErrors).some((err) => err !== "")) return;
+    if (Object.values(newErrors).some((e) => e)) return;
 
     try {
       const res = await fetch("/api/students/register", {
@@ -72,11 +73,9 @@ export default function StudentRegistrationForm() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       const result = await res.json();
-
       if (res.ok) {
-        setMessage("✅ Registration successful!");
+        setShowPopup(true);
         setFormData({
           name: "",
           email: "",
@@ -90,182 +89,159 @@ export default function StudentRegistrationForm() {
         });
         setErrors({ email: "", phone: "", parentphone: "" });
       } else {
-        setMessage(result.message || "❌ Registration failed.");
+        alert(result.message || "❌ Registration failed.");
       }
     } catch (err) {
       console.error(err);
-      setMessage("❌ Something went wrong.");
+      alert("❌ Something went wrong.");
     }
   };
 
   return (
     <div>
-      {/* Top Navbar with logo */}
-      <nav className="h-24 px-4 flex items-center justify-center bg-white shadow border-b border-gray-200">
-        <img
-          src="/logo/logo-full.svg"
-          alt="SRM Connect Logo"
-          className="h-60"
+      {showPopup && (
+        <SuccessPopup
+          message="✅ Registration successful!"
+          onClose={() => setShowPopup(false)}
         />
-      </nav>
+      )}
 
-      {/* Main section with two-column layout */}
-      <div className="flex flex-col lg:flex-row min-h-screen">
-        {/* Left Text Area */}
-        <div className="w-full lg:w-1/2 flex flex-col mt-10 p-10">
-          <h1 className="text-6xl font-bold text-blue-700 mb-4">
-            Student Registration Open!
-          </h1>
-          <p className="text-gray-700 text-lg">
-            Enroll today and get access to career-guided counselling and top
-            course recommendations.
-          </p>
-          <div className="mt-8 shadow-md bg-yellow-400 w-[400px] p-6 rounded-lg">
-            <p className="text-center text-red-500 text-xl font-semibold">
-              ADMISSION OPEN FOR 2025–26
-            </p>
-            <img
-              src="/logo/NAAC.png"
-              alt="SRM Connect Logo"
-              className="h-30 shadow-2xl justify-center mx-auto mt-4"
-            />
-          </div>
-        </div>
-
-        {/* Right Form Area */}
+      <div className="flex justify-center lg:flex-row min-h-screen">
         <div className="w-full lg:w-1/2 flex justify-center items-center p-6">
-          <form
-            onSubmit={handleSubmit}
-            className="w-full max-w-xl bg-white shadow-lg rounded p-6 space-y-4"
-          >
-            <h2 className="text-2xl font-semibold mb-4">
-              Student Registration
-            </h2>
+          <Card className="w-full max-w-xl">
+            <CardHeader>
+              <img src="/logo/logo-full.svg" alt="SRM Logo" className="h-40" />
+              <p className="text-red-500 text-xl font-semibold">
+                ADMISSION OPEN FOR 2025 & 26
+              </p>
+              <CardTitle className="text-xl">Student Registration</CardTitle>
+              <p className="text-gray-700">
+                Enroll today and get access to career-guided counselling and top
+                course recommendations.
+              </p>
+            </CardHeader>
+            <CardContent>
+              <form className="space-y-4" onSubmit={handleSubmit}>
+                <Input
+                  name="name"
+                  placeholder="Full Name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  required
+                />
 
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Full Name"
-              className="w-full p-2 border rounded"
-              required
-            />
+                <div>
+                  <Input
+                    name="email"
+                    placeholder="Email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.email && (
+                    <p className="text-sm text-red-500">{errors.email}</p>
+                  )}
+                </div>
 
-            <div>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="Email"
-                className="w-full p-2 border rounded"
-                required
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-              )}
-            </div>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  className="w-full border text-[#737373] rounded p-2"
+                  required
+                >
+                  <option value="male">Male</option>
+                  <option value="female">Female</option>
+                  <option value="other">Other</option>
+                </select>
 
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other</option>
-            </select>
+                <Input
+                  name="schoolname"
+                  placeholder="School Name"
+                  value={formData.schoolname}
+                  onChange={handleChange}
+                  required
+                />
 
-            <input
-              type="text"
-              name="schoolname"
-              value={formData.schoolname}
-              onChange={handleChange}
-              placeholder="School Name"
-              className="w-full p-2 border rounded"
-              required
-            />
+                <Input
+                  name="currentclass"
+                  placeholder="Current Class"
+                  value={formData.currentclass}
+                  onChange={handleChange}
+                  required
+                />
 
-            <input
-              type="text"
-              name="currentclass"
-              value={formData.currentclass}
-              onChange={handleChange}
-              placeholder="Current Class"
-              className="w-full p-2 border rounded"
-              required
-            />
+                <div>
+                  <Input
+                    name="phone"
+                    placeholder="Student Phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.phone && (
+                    <p className="text-sm text-red-500">{errors.phone}</p>
+                  )}
+                </div>
 
-            <div>
-              <input
-                type="text"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                placeholder="Student Phone"
-                className="w-full p-2 border rounded"
-                required
-              />
-              {errors.phone && (
-                <p className="text-red-500 text-sm mt-1">{errors.phone}</p>
-              )}
-            </div>
+                <div>
+                  <Label htmlFor="havewhatsapp" className="mb-2 text-[#525252]">
+                    Student WhatsApp
+                  </Label>
+                  <select
+                    name="havewhatsapp"
+                    value={formData.havewhatsapp}
+                    onChange={handleChange}
+                    className="w-full border text-[#525252] rounded p-2"
+                    required
+                  >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
 
-            <select
-              name="havewhatsapp"
-              value={formData.havewhatsapp}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="yes">Has WhatsApp</option>
-              <option value="no">No WhatsApp</option>
-            </select>
+                <div>
+                  <Input
+                    name="parentphone"
+                    placeholder="Parent Phone"
+                    value={formData.parentphone}
+                    onChange={handleChange}
+                    required
+                  />
+                  {errors.parentphone && (
+                    <p className="text-sm text-red-500">{errors.parentphone}</p>
+                  )}
+                </div>
 
-            <div>
-              <input
-                type="text"
-                name="parentphone"
-                value={formData.parentphone}
-                onChange={handleChange}
-                placeholder="Parent Phone"
-                className="w-full p-2 border rounded"
-                required
-              />
-              {errors.parentphone && (
-                <p className="text-red-500 text-sm mt-1">
-                  {errors.parentphone}
-                </p>
-              )}
-            </div>
+                <div>
+                  <Label
+                    htmlFor="parentwhatsapp"
+                    className="mb-2 text-[#525252]"
+                  >
+                    Parent WhatsApp
+                  </Label>
+                  <select
+                    name="parentwhatsapp"
+                    value={formData.parentwhatsapp}
+                    onChange={handleChange}
+                    className="w-full border text-[#525252]  rounded p-2"
+                    required
+                  >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
+                </div>
 
-            <select
-              name="parentwhatsapp"
-              value={formData.parentwhatsapp}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="yes">Parent has WhatsApp</option>
-              <option value="no">No WhatsApp</option>
-            </select>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-            >
-              Submit
-            </button>
-
-            {message && <p className="text-sm mt-2 text-center">{message}</p>}
-          </form>
+                <Button type="submit" className="w-full">
+                  Submit
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
         </div>
       </div>
-      {/* Footer */}
-      <footer className="w-full border-t-1 text-center py-4 bg-gray-100 text-gray-500 text-sm mt-8">
+
+      <footer className="w-full border-t text-center py-4 bg-gray-100 text-gray-500 text-sm mt-8">
         <div className="flex items-center justify-center space-x-2">
           <i className="ri-copyright-line"></i>
           <p>All Rights Reserved 2025</p>
