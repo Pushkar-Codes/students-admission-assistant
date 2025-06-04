@@ -5,7 +5,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import SuccessPopup from "@/components/SuccessPopup"; // Ensure correct import path
+import SuccessPopup from "@/components/SuccessPopup";
+import Link from "next/link";
 
 export default function StudentRegistrationForm() {
   const [formData, setFormData] = useState({
@@ -110,7 +111,14 @@ export default function StudentRegistrationForm() {
         <div className="w-full lg:w-1/2 flex justify-center items-center p-6">
           <Card className="w-full max-w-xl">
             <CardHeader>
-              <img src="/logo/logo-full.svg" alt="SRM Logo" className="h-40" />
+              <Link href="/" className="block">
+                <img
+                  src="/logo/logo-full.svg"
+                  alt="SRM Logo"
+                  className="h-40"
+                />
+              </Link>
+
               <p className="text-red-500 text-xl font-semibold">
                 ADMISSION OPEN FOR 2025 & 26
               </p>

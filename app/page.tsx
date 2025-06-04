@@ -32,7 +32,7 @@ export default function Home() {
       <div className="w-full h-auto flex flex-col justify-center items-center">
         <Image src="/logo/logo-full.svg" alt="Logo" width={200} height={100} />
       </div>
-      <div className="w-[80%] border">
+      <div className="w-[80%]">
         <h1
           ref={headingRef}
           className="scroll-m-20 text-center text-4xl font-bold tracking-tight text-balance"
@@ -71,6 +71,24 @@ export default function Home() {
           </Link>
         </div>
       </div>
+      <div className="mt-11 flex space-x-4">
+        <Link
+          href="/login"
+          className="flex items-center gap-1 text-gray-800 no-underline hover:underline transition duration-150"
+        >
+          <i className="ri-shield-user-line"></i>
+          Admin
+        </Link>
+
+        <Link
+          href="/staff/login"
+          className="flex items-center gap-1 text-gray-800 no-underline hover:underline transition duration-150"
+        >
+          <i className="ri-user-3-line"></i>
+          Staff
+        </Link>
+      </div>
+
       <div className="flex-grow" />
       <footer className="w-full border-t text-center py-4 bg-gray-100 text-gray-500 text-sm mt-8">
         <div className="flex items-center justify-center space-x-2">

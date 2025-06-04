@@ -24,17 +24,24 @@ export const authOptions = {
           id: user._id.toString(),
           email: user.email,
           role: user.role,
+          name: user.name,
         };
       },
     }),
   ],
   callbacks: {
     async session({ session, token }) {
-      if (token) session.user.role = token.role;
+      if (token) {
+        session.user.role = token.role;
+        session.user.name = token.name;
+      }
       return session;
     },
     async jwt({ token, user }) {
-      if (user) token.role = user.role;
+      if (user) {
+        token.role = user.role;
+        token.name = user.name;
+      }
       return token;
     },
   },
