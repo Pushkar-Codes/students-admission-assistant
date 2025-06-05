@@ -1,11 +1,14 @@
 package com.Rupankar.BackendJavaERP.Staff;
 import com.Rupankar.BackendJavaERP.Student.DTO.AttributePageResponse;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -52,8 +55,7 @@ public class StaffService {
 
     // Method to get field by a particular attribute
     public List<String> getFieldByAttributeStaff(String attribute, String value, String returnField) {
-        Query query = new Query();
-        query.addCriteria(Criteria.where(attribute).is(value));
+        Query query = new Query(Criteria.where(attribute).is(value));
         if (!returnField.equals("_id")) {
             query.fields().include(returnField).exclude("_id");
         } else {
@@ -75,5 +77,38 @@ public class StaffService {
                 .toList();
     }
 
+    // Method to edit field of a staff by attribute
+    public String editFieldByAttributeStaff(String filter_attribute, String filter_value,
+                                            String update_field, String new_value){
+
+        Query query = new Query(Criteria.where(filter_attribute).is(filter_value));
+        Update update = new Update().set(update_field, new_value);
+
+        UpdateResult updateResult = mongoTemplate.updateFirst(query,update,"users");
+
+        if(updateResult.getMatchedCount() == 0){
+            return "no match found";
+        } else if (updateResult.getModifiedCount() == 0) {
+            return "Document found, but nothing was updated (maybe same value).";
+        }
+        else {
+            return "update success";
+        }
+    }
+
+    // Method to delete field of a staff by attribute
+    public String deleteFieldByAttributeStaff(String filter_attribute, String filter_value){
+
+        Query query = new Query(Criteria.where(filter_attribute).is(filter_value));
+
+        DeleteResult deleteResult = mongoTemplate.remove(query, "users");
+
+        if (deleteResult.getDeletedCount() == 0){
+            return "no match fund";
+        }
+        else {
+            return deleteResult.getDeletedCount() + " documents deleted";
+        }
+    }
 
 }

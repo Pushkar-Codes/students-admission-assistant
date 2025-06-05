@@ -2,10 +2,7 @@ package com.Rupankar.BackendJavaERP.Staff;
 import com.Rupankar.BackendJavaERP.Student.DTO.AttributePageResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,6 +38,26 @@ public class StaffController {
             @RequestParam String returnField) {
 
         return staffService.getFieldByAttributeStaff(attribute, value, returnField);
+    }
+
+    // Endpoint to edit field of a staff by attribute
+    @PutMapping("/edit_field_by_attribute_staff")
+    public String editFieldByAttributeStaff(
+            @RequestParam String filter_attribute,
+            @RequestParam String filter_value,
+            @RequestParam String update_field,
+            @RequestParam String new_value
+    ){
+        return staffService.editFieldByAttributeStaff(filter_attribute, filter_value, update_field, new_value);
+    }
+
+    // Endpoint to delete a field of a staff by attribute
+    @DeleteMapping("delete_field_by_attribute_staff")
+    public String deleteFieldByAttributeStaff(
+            @RequestParam String filter_attribute,
+            @RequestParam String filter_value
+    ){
+        return staffService.deleteFieldByAttributeStaff(filter_attribute, filter_value);
     }
 
 }
