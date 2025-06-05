@@ -1,7 +1,9 @@
 package com.Rupankar.BackendJavaERP.Student;
 
 import com.Rupankar.BackendJavaERP.Student.DTO.AttributePageResponse;
+import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,12 @@ public class StudentController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         return studentService.getFieldValuesWithPagination(field, page, size);
+    }
+
+    @GetMapping("/all_student_data")
+    public ResponseEntity<List<Document>> getAllStudentsExcludingId() {
+        List<Document> students = studentService.getAllStudentDataExcludingId();
+        return ResponseEntity.ok(students);
     }
 
     // Endpoint to get name by attribute

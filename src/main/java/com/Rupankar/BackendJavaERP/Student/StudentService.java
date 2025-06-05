@@ -72,6 +72,14 @@ public class StudentService {
         );
     }
 
+    // get all data of students
+    public List<Document> getAllStudentDataExcludingId() {
+        Query query = new Query();
+        query.fields().exclude("_id");  // Exclude _id from projection
+
+        return mongoTemplate.find(query, Document.class, "studentregisters");
+    }
+
     // Method to get Emails by attribute
 //    public List<String> getStudentEmailsByAttribute(String attribute, String value) {
 //        Query query = new Query();
