@@ -24,6 +24,7 @@ public class StudentController {
         return studentService.getFieldValuesWithPagination(field, page, size);
     }
 
+    // Endpoint to get all data of all student
     @GetMapping("/all_student_data")
     public ResponseEntity<List<Document>> getAllStudentsExcludingId() {
         List<Document> students = studentService.getAllStudentDataExcludingId();

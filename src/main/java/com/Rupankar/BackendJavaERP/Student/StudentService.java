@@ -37,7 +37,7 @@ public class StudentService {
 //                .toList();
 //    }
 
-    // Method to get all values of any attribute with pegination.
+    // Method to get all values of any attribute with pagination.
     public AttributePageResponse getFieldValuesWithPagination(String field, int page, int size) {
 
         Query query = new Query().with(PageRequest.of(page, size));
