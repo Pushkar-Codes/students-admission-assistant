@@ -60,66 +60,64 @@ export default function StaffCreatePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle>Create Staff Account</CardTitle>
-          <CardDescription>
-            Enter staff details to create a new staff account.
-          </CardDescription>
-        </CardHeader>
+    <Card className="w-full max-w-md">
+      <CardHeader>
+        <CardTitle>Create Staff Account</CardTitle>
+        <CardDescription>
+          Enter staff details to create a new staff account.
+        </CardDescription>
+      </CardHeader>
 
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            <div className="grid gap-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                type="text"
-                placeholder="Staff full name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-            </div>
+      <form onSubmit={handleSubmit}>
+        <CardContent className="space-y-4">
+          <div className="grid gap-2">
+            <Label htmlFor="name">Name</Label>
+            <Input
+              id="name"
+              type="text"
+              placeholder="Staff full name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
 
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="staff@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
+          <div className="grid gap-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="staff@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
 
-            <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+          <div className="grid gap-2">
+            <Label htmlFor="password">Password</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
-            {success && (
-              <p className="text-green-600 text-sm mt-1">{success}</p>
-            )}
-          </CardContent>
+          {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+          {success && (
+            <p className="text-green-600 text-sm mt-1">{success}</p>
+          )}
+        </CardContent>
 
-          <CardFooter className="flex flex-col gap-2 mt-4">
-            <Button type="submit" className="w-full">
-              <i className="ri-user-add-line mr-2"></i> Create Staff
-            </Button>
-          </CardFooter>
-        </form>
-      </Card>
-    </div>
+        <CardFooter className="flex flex-col gap-2 mt-4">
+          <Button type="submit" className="w-full">
+            <i className="ri-user-add-line mr-2"></i> Create Staff
+          </Button>
+        </CardFooter>
+      </form>
+    </Card>
   );
 }

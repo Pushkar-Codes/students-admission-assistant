@@ -9,6 +9,8 @@ import { useRouter } from "next/navigation";
 import UploadTemplates from "./admin/UploadTemplates";
 import gsap from "gsap";
 import Link from "next/link";
+import AllStudents from "./AllStudents";
+import AllStaff from "./AllStaff";
 
 export default function AdminDashboard({ session }: { session: any }) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -44,7 +46,7 @@ export default function AdminDashboard({ session }: { session: any }) {
 
   const sections = [
     {
-      title: "View Registered Students",
+      title: "Registered Students",
       icon: "ri-user-3-line",
       id: "students",
       description: "View or manage student data",
@@ -187,10 +189,15 @@ export default function AdminDashboard({ session }: { session: any }) {
 
           {activeSection ? (
             activeSection === "staff" ? (
-              // Render your StaffCreatePage component here for staff management
-              <StaffCreatePage />
+              <>
+                <StaffCreatePage />
+                {/* Use a small margin for spacing */}
+                <div className="my-4" />
+                <AllStaff />
+              </>
+            ) : activeSection === "students" ? (
+              <AllStudents />
             ) : activeSection === "templates" ? (
-              // Render UploadTemplates component for Upload Templates section
               <UploadTemplates />
             ) : (
               <Card>
@@ -200,10 +207,7 @@ export default function AdminDashboard({ session }: { session: any }) {
                       {sections.find((s) => s.id === activeSection)?.title}
                     </CardTitle>
                     <p className="text-sm text-gray-500">
-                      {
-                        sections.find((s) => s.id === activeSection)
-                          ?.description
-                      }
+                      {sections.find((s) => s.id === activeSection)?.description}
                     </p>
                   </div>
                   <Button
