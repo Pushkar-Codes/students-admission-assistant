@@ -13,6 +13,7 @@ public class StudentModel {
     public Boolean havewhatsapp;
     public String parentphone;
     public Boolean parentwhatsapp;
+    public String assignedStaff;
 
     // Getter start from here
 

@@ -1,5 +1,7 @@
 package com.Rupankar.BackendJavaERP.Staff;
 import com.Rupankar.BackendJavaERP.Student.DTO.AttributePageResponse;
+import com.Rupankar.BackendJavaERP.Student.StudentModel;
+import com.Rupankar.BackendJavaERP.Student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +60,25 @@ public class StaffController {
             @RequestParam String filter_value
     ){
         return staffService.deleteFieldByAttributeStaff(filter_attribute, filter_value);
+    }
+
+    // Endpoint to assign staff.
+    @PutMapping("/assign_staff")
+    public String assign_staff(
+            @RequestParam String filter_attribute,
+            @RequestParam String filter_value,
+            @RequestParam String staff_name
+    ){
+        return staffService.assignedStaff(filter_attribute,filter_value,staff_name);
+    }
+
+    // Endpoint to get all data of a student where staff = given by client.
+    @GetMapping("/assign_staff_student_data")
+    public ResponseEntity<List<StudentModel>> studentDataAssignedStaff(
+            @RequestParam String staff_name
+    ){
+        List<StudentModel> student_list = staffService.studentData(staff_name);
+        return ResponseEntity.ok(student_list);
     }
 
 }

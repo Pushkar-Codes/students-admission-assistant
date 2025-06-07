@@ -1,5 +1,6 @@
 package com.Rupankar.BackendJavaERP.Staff;
 import com.Rupankar.BackendJavaERP.Student.DTO.AttributePageResponse;
+import com.Rupankar.BackendJavaERP.Student.StudentModel;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
@@ -109,6 +110,34 @@ public class StaffService {
         else {
             return deleteResult.getDeletedCount() + " documents deleted";
         }
+    }
+
+    // Method to assign staff.
+    public String assignedStaff(String filter_attribute, String filter_value, String staff_name){
+
+        Query query = new Query(Criteria.where(filter_attribute).is(filter_value));
+        Update update = new Update().set("assignedStaff",staff_name);
+
+        UpdateResult updateResult = mongoTemplate.updateFirst(query, update, "studentregisters");
+
+        if (updateResult.getMatchedCount() == 0){
+            return "no match found";
+        } else if (updateResult.getModifiedCount() == 0) {
+            return "Document found, but nothing was updated (maybe same value).";
+        }
+        else {
+          return   "staff assign success";
+        }
+    }
+
+    // Method to get student data by a staff name.
+    public List<StudentModel> studentData(String staff_name){
+
+        Query query = new Query(Criteria.where("assignedStaff").is(staff_name));
+        query.fields().exclude("_id");
+
+        return mongoTemplate.find(query, StudentModel.class, "studentregisters");
+
     }
 
 }
