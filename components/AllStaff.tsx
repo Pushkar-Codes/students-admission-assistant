@@ -92,7 +92,7 @@ export default function AllStaff() {
   );
 
   return (
-    <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto mx-0 my-8">
       <Card>
         <CardHeader>
           <CardTitle>All Staff</CardTitle>

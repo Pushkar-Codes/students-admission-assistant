@@ -106,7 +106,10 @@ export default function AllStudents() {
   return (
     <div className="overflow-x-auto p-4">
       <div className="mb-2 flex justify-end">
-        <Button onClick={handleExportCSV} className="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold">
+        <Button
+          onClick={handleExportCSV}
+          className="bg-green-600 hover:bg-green-700 text-white text-xs font-semibold"
+        >
           Export as CSV
         </Button>
       </div>
