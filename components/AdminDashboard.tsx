@@ -13,6 +13,7 @@ import AllStudents from "./AllStudents";
 import AllStaff from "./AllStaff";
 import AssignStaffToStudent from "./AssignStaffToStudent";
 import ActivityLogs from "./ActivityLogs";
+import AdminCallLogs from "./AdminCallLogs";
 
 export default function AdminDashboard({ session }: { session: any }) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -204,6 +205,8 @@ export default function AdminDashboard({ session }: { session: any }) {
               <UploadTemplates />
             ) : activeSection === "rights" ? (
               <AssignStaffToStudent />
+            ) : activeSection === "calls" ? (
+              <AdminCallLogs />
             ) : activeSection === "logs" ? (
               <ActivityLogs />
             ) : (

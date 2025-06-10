@@ -1,9 +1,9 @@
-import StudentRegistration from "@/components/StudentRegistration";
+import StudentRegistrationForm from "@/components/StudentRegistration";
 
 export default function StudentPage() {
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      <StudentRegistration />
+      <StudentRegistrationForm />
     </div>
   );
 }
