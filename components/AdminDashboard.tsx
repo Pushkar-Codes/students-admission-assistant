@@ -11,6 +11,9 @@ import gsap from "gsap";
 import Link from "next/link";
 import AllStudents from "./AllStudents";
 import AllStaff from "./AllStaff";
+import AssignStaffToStudent from "./AssignStaffToStudent";
+import ActivityLogs from "./ActivityLogs";
+import AdminCallLogs from "./AdminCallLogs";
 
 export default function AdminDashboard({ session }: { session: any }) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -191,14 +194,21 @@ export default function AdminDashboard({ session }: { session: any }) {
             activeSection === "staff" ? (
               <>
                 <StaffCreatePage />
-                {/* Use a small margin for spacing */}
                 <div className="my-4" />
                 <AllStaff />
+                <div className="my-4" />
+                <AssignStaffToStudent />
               </>
             ) : activeSection === "students" ? (
               <AllStudents />
             ) : activeSection === "templates" ? (
               <UploadTemplates />
+            ) : activeSection === "rights" ? (
+              <AssignStaffToStudent />
+            ) : activeSection === "calls" ? (
+              <AdminCallLogs />
+            ) : activeSection === "logs" ? (
+              <ActivityLogs />
             ) : (
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
@@ -207,7 +217,10 @@ export default function AdminDashboard({ session }: { session: any }) {
                       {sections.find((s) => s.id === activeSection)?.title}
                     </CardTitle>
                     <p className="text-sm text-gray-500">
-                      {sections.find((s) => s.id === activeSection)?.description}
+                      {
+                        sections.find((s) => s.id === activeSection)
+                          ?.description
+                      }
                     </p>
                   </div>
                   <Button

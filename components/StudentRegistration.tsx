@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,6 +10,8 @@ import SuccessPopup from "@/components/SuccessPopup";
 import Link from "next/link";
 
 export default function StudentRegistrationForm() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -89,6 +92,7 @@ export default function StudentRegistrationForm() {
           parentwhatsapp: "yes",
         });
         setErrors({ email: "", phone: "", parentphone: "" });
+        router.push("/registration-success");
       } else {
         alert(result.message || "❌ Registration failed.");
       }

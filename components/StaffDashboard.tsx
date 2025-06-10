@@ -7,6 +7,10 @@ import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import gsap from "gsap";
 import Link from "next/link";
+import UploadTemplates from "./admin/UploadTemplates";
+import StaffAssignedStudents from "./StaffAssignedStudents";
+import StaffCallLogs from "./StaffCallLogs";
+import StaffActivityLogs from "./StaffActivityLogs";
 
 export default function StaffDashboard({ session }: { session: any }) {
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -162,26 +166,42 @@ export default function StaffDashboard({ session }: { session: any }) {
           </h1>
 
           {activeSection ? (
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between">
-                <div>
-                  <CardTitle className="text-xl">
-                    {sections.find((s) => s.id === activeSection)?.title}
-                  </CardTitle>
-                  <p className="text-sm text-gray-500">
-                    {sections.find((s) => s.id === activeSection)?.description}
+            activeSection === "templates" ? (
+              <UploadTemplates />
+            ) : activeSection === "students" ? (
+              <StaffAssignedStudents staffName={session?.user?.name || ""} />
+            ) : activeSection === "calls" ? (
+              <StaffCallLogs staffName={session?.user?.name || ""} />
+            ) : activeSection === "logs" ? (
+              <StaffActivityLogs staffName={session?.user?.name || ""} />
+            ) : (
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between">
+                  <div>
+                    <CardTitle className="text-xl">
+                      {sections.find((s) => s.id === activeSection)?.title}
+                    </CardTitle>
+                    <p className="text-sm text-gray-500">
+                      {
+                        sections.find((s) => s.id === activeSection)
+                          ?.description
+                      }
+                    </p>
+                  </div>
+                  <Button
+                    variant="ghost"
+                    onClick={() => setActiveSection(null)}
+                  >
+                    ✕
+                  </Button>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-gray-700">
+                    This section is under construction.
                   </p>
-                </div>
-                <Button variant="ghost" onClick={() => setActiveSection(null)}>
-                  ✕
-                </Button>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-700">
-                  This section is under construction.
-                </p>
-              </CardContent>
-            </Card>
+                </CardContent>
+              </Card>
+            )
           ) : (
             <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
               {sections.map((section) => (

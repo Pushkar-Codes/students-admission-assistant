@@ -10,15 +10,11 @@ const StudentRegisterSchema = new Schema({
   },
   schoolname: { type: String, required: true },
   currentclass: { type: String, required: true },
-  // prefferdcourse: {
-  //   type: String,
-  //   enum: ["UG", "PG", "PhD"],
-  //   required: true,
-  // },
   phone: { type: String, required: true },
   havewhatsapp: { type: String, required: true },
   parentphone: { type: String, required: true },
   parentwhatsapp: { type: String, required: true },
+  assignedStaff: { type: String, default: "" },
 });
 
 export default mongoose.models.StudentRegister ||
