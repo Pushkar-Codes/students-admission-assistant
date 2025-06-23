@@ -117,9 +117,9 @@ export default function StudentRegistrationForm() {
             <CardHeader>
               <Link href="/" className="block">
                 <img
-                  src="/logo/logo-full.svg"
-                  alt="SRM Logo"
-                  className="h-40"
+                  src="/logo/srmLogoNew.png"
+                  alt="SRM Connect Logo"
+                  className="w-auto mb-6"
                 />
               </Link>
 

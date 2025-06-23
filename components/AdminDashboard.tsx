@@ -91,7 +91,7 @@ export default function AdminDashboard({ session }: { session: any }) {
       <nav className="h-20 px-6 flex items-center justify-between bg-white border-b shadow-sm relative">
         <Link href="/" className="block">
           <img
-            src="/logo/logo-full.svg"
+            src="/logo/srmLogoNew.png"
             alt="SRM Connect Logo"
             className="h-12"
           />

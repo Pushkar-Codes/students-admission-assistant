@@ -123,7 +123,7 @@ export default function AllStaff() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="ml-2 px-2 py-0 text-xs"
+                        className="ml-2 text-orange-700 px-2 py-0 text-xs"
                         onClick={() => handleEdit(s, key)}
                       >
                         Edit
